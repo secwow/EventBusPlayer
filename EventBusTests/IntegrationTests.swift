@@ -37,7 +37,9 @@ class IntegrationTests: XCTestCase {
         
         sut.play()
         
-        XCTAssertEqual(publisherSpy.publishedEvents, [.onPlay])
+        XCTAssertEqual(publisherSpy.publishedEvents,
+                       
+                       [.onPlay])
     }
     
     func test_player_eventSequence() {
@@ -60,10 +62,33 @@ class IntegrationTests: XCTestCase {
                                                       .onPlaybackFinished])
     }
     
+    func test_player_callRemoveWhenItNeeded() {
+        let (sut, publisherSpy, manager) = makeSUT()
+        let registeredListener = "1"
+        sut.addListener(listener: registeredListener, onEvent: .onPlay, completion: { (event) in
+        }, priority: .high)
+        
+        XCTAssertEqual(manager.registeredHashable, [registeredListener])
+        sut.removeListener(listener: registeredListener)
+        XCTAssertEqual(manager.registeredHashable, [registeredListener])
+    }
+    
     func makeSUT() -> (Player, EventBusPublisherSpy, EventBusListenerManagerSpy) {
         let publisherSpy = EventBusPublisherSpy()
         let managerSpy = EventBusListenerManagerSpy()
         let sut = VideoPlayerComposer.compose(publisher: publisherSpy, listeningManager: managerSpy)
+        trackForMemoryLeaks(publisherSpy)
+        trackForMemoryLeaks(managerSpy)
+        trackForMemoryLeaks(sut as AnyObject)
+
         return (sut, publisherSpy, managerSpy)
+    }
+}
+
+extension XCTestCase {
+    func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+        }
     }
 }
