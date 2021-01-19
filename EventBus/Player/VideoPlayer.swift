@@ -1,43 +1,43 @@
-import UIKit
+import AVKit
 
 class VideoPlayer: Player {
+    private let eventBusListenerManager: EventBusListenerManager
+    private let delegate: VideoPlayerDelegate
 
-    private let eventBus: EventBus<PlayerEvents>
-    
-    init(with eventBus: EventBus<PlayerEvents>) {
-        self.eventBus = eventBus
+    init(eventBusListenerManager: EventBusListenerManager,
+         delegate: VideoPlayerDelegate) {
+        self.eventBusListenerManager = eventBusListenerManager
+        self.delegate = delegate
     }
     
     func addListener(listener: AnyHashable,
                      onEvent: PlayerEvents,
                      completion: @escaping (PlayerEvents) -> (),
                      priority: Priority) {
-        eventBus.register(event: onEvent, for: completion, for: listener, priority: priority)
+        eventBusListenerManager.register(event: onEvent, for: completion, for: listener, priority: priority)
     }
     
     func removeListener(listener: AnyHashable) {
-        eventBus.unregister(object: listener)
+        eventBusListenerManager.unregister(object: listener)
     }
     
     func load() {
-        eventBus.publish(event: .onLoaded)
+        delegate.load()
     }
     
     func unload() {
-        eventBus.publish(event: .onUnloaded)
+        delegate.unload()
     }
     
     func destroy() {
-        eventBus.publish(event: .onPlaybackFinished)
-        eventBus.publish(event: .onUnloaded)
+        delegate.destroy()
     }
     
     func play() {
-        eventBus.publish(event: .onPlay)
-
+        delegate.play()
     }
     
     func pause() {
-        eventBus.publish(event: .onPause)
+        delegate.pause()
     }
 }

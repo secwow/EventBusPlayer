@@ -1,23 +1,23 @@
 import Foundation
 
 class EventBus<Event: Hashable> {
-    private var listeners: [Event: [AnyHashable: EventEntrie<Event>]]
+    private var listeners: [Event: [AnyHashable: EventEntry<Event>]]
     private var lock: NSLock = NSLock()
     
-    init(listeners: [Event: [Int: EventEntrie<Event>]] = [:]) {
+    init(listeners: [Event: [Int: EventEntry<Event>]] = [:]) {
         self.listeners = listeners
     }
     
     func register(event: Event,
                 for listener: @escaping (Event) -> (),
                 for object: AnyHashable,
-                priority: Priority = .medium) {
+                priority: Priority) {
         defer {
             lock.unlock()
         }
         lock.lock()
         
-        let entry = EventEntrie(id: object, priority: priority, listener: listener)
+        let entry = EventEntry(id: object, priority: priority, listener: listener)
         
         if var listenersWithEvent = listeners[event] {
             guard listenersWithEvent[object] == nil else {

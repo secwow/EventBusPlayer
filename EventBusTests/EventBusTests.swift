@@ -55,7 +55,7 @@ class ProjectPlayerTests: XCTestCase {
         var order = [Priority]()
         
         let sequence = [Priority.low, .high, .medium, .medium, .low, .low, .high]
-        for orderNumber in 1...7 {
+        for orderNumber in 0..<7 {
             let priority = sequence[orderNumber]
             bus.register(event: .play, for: { (event) in
                 order.append(priority)
@@ -79,7 +79,6 @@ class ProjectPlayerTests: XCTestCase {
         DispatchQueue.concurrentPerform(iterations: iterations) { iteration in
             bus.register(event: .play, for: { (event) in
                 XCTAssertEqual(event, eventToPublish)
-                print("1")
                 expect.fulfill()
             }, for: "\(iteration)",
             priority: .low)
@@ -98,7 +97,6 @@ class ProjectPlayerTests: XCTestCase {
         
         bus.register(event: .play, for: { (event) in
             XCTAssertEqual(event, eventToPublish)
-            print("1")
             expect.fulfill()
         }, for: "\(1)",
         priority: .low)
