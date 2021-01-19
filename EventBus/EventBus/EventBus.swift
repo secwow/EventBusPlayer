@@ -11,7 +11,7 @@ class EventBus<Event: Hashable> {
     func register(event: Event,
                 for listener: @escaping (Event) -> (),
                 for object: AnyHashable,
-                priority: Priority) {
+                priority: Priority = .medium) {
         defer {
             lock.unlock()
         }
@@ -49,15 +49,6 @@ class EventBus<Event: Hashable> {
         }
     }
     
-    func unregister(object: AnyHashable, for event: Event) {
-        defer {
-            lock.unlock()
-        }
-        lock.lock()
-        
-        listeners[event]?[object.hashValue] = nil
-    }
-    
     func unregister(object: AnyHashable) {
         defer {
             lock.unlock()
@@ -67,7 +58,7 @@ class EventBus<Event: Hashable> {
         let allKeys = listeners.keys
         
         for key in allKeys {
-            listeners[key]?[object.hashValue] = nil
+            listeners[key]?[object] = nil
         }
     }
 }

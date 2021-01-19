@@ -1,7 +1,7 @@
 import XCTest
 @testable import EventBus
 
-class ProjectPlayerTests: XCTestCase {
+class EventBusTests: XCTestCase {
     enum PlayerEvent {
         case play, stop
     }
@@ -67,6 +67,23 @@ class ProjectPlayerTests: XCTestCase {
         bus.publish(event: eventToPublish)
         waitForExpectations(timeout: 1.0, handler: nil)
         XCTAssertEqual(order, [.high, .high, .medium, .medium, .low, .low, .low])
+    }
+    
+    func test_bus_shouldNotDeliverValueAfterUnregister()  {
+        let bus = EventBus<PlayerEvent>()
+        let eventToPublish = PlayerEvent.play
+        let registeredObject = "1"
+
+        let expect = expectation(description: "Waiting for event")
+        expect.isInverted = true
+    
+        bus.register(event: .play, for: { (event) in
+            expect.fulfill()
+        }, for: registeredObject)
+        bus.unregister(object: registeredObject)
+        
+        bus.publish(event: eventToPublish)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func test_register_shouldBeThreadSafe()  {

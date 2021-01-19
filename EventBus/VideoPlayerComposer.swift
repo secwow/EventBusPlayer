@@ -1,116 +1,48 @@
 import UIKit
 import AVKit
 
-protocol VideoPlayerDelegate {
-    func load()
+private final class VideoPlayerDelegateCompositor: VideoPlayerDelegate {
+    private let delegates: [VideoPlayerDelegate]
     
-    func unload()
-    
-    func destroy()
-    
-    func play()
-    
-    func pause()
-}
-
-class FakePlayer: VideoPlayerDelegate {
-    private var lastEvent: PlayerEvents? {
-        didSet {
-            print(lastEvent as Any)
-        }
+    init(delegates: [VideoPlayerDelegate]) {
+        self.delegates = delegates
     }
     
     func load() {
-        lastEvent = .onLoaded
+        delegates.forEach({$0.load()})
     }
     
     func unload() {
-        lastEvent = .onUnloaded
+        delegates.forEach({$0.unload()})
     }
     
     func destroy() {
-        lastEvent = nil
+        delegates.forEach({$0.destroy()})
     }
     
     func play() {
-        lastEvent = .onPlay
+        delegates.forEach({$0.play()})
     }
     
     func pause() {
-        lastEvent = .onPause
-    }
-}
-
-class PlayerPublisher: VideoPlayerDelegate {
-    private let publisher: EventBusPublisher
-    
-    init(publisher: EventBusPublisher) {
-        self.publisher = publisher
-    }
-    
-    func load() {
-        publisher.publish(event: .onLoaded)
-    }
-    
-    func unload() {
-        publisher.publish(event: .onUnloaded)
-
-    }
-    
-    func destroy() {
-        publisher.publish(event: .onPlaybackFinished)
-
-    }
-    
-    func play() {
-        publisher.publish(event: .onPlay)
-
-    }
-    
-    func pause() {
-        publisher.publish(event: .onPause)
-    }
-}
-
-final class VideoPlayerDelegateCompositor: VideoPlayerDelegate {
-    private let delegate: [VideoPlayerDelegate]
-    
-    init(delegate: [VideoPlayerDelegate]) {
-        self.delegate = delegate
-    }
-    
-    func load() {
-        delegate.forEach({$0.load()})
-    }
-    
-    func unload() {
-        delegate.forEach({$0.unload()})
-
-    }
-    
-    func destroy() {
-        delegate.forEach({$0.destroy()})
-
-    }
-    
-    func play() {
-        delegate.forEach({$0.play()})
-
-    }
-    
-    func pause() {
-        delegate.forEach({$0.pause()})
+        delegates.forEach({$0.pause()})
     }
 }
 
 struct VideoPlayerComposer {
-    static func compose(streamURL: URL,
-                        publisher: EventBusPublisher,
-                        listeningManager: EventBusListenerManager)
+    static func compose(publisher: EventBusPublisher,
+                        listeningManager: EventBusManager)
     -> (Player) {
         
-        return VideoPlayer(eventBusListenerManager: listeningManager,
-                            eventBusPublisher: publisher)
+        // Ideally we should observe the changes from player and publish them into event bus
+        return VideoPlayer(
+            eventBusListenerManager: listeningManager,
+            delegate: VideoPlayerDelegateCompositor(
+                delegates: [FakePlayer(),
+                PlayerPublisher(publisher: publisher
+                )]
+            )
+        )
     }
 }
 

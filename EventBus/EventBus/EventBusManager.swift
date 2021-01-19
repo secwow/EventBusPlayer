@@ -1,6 +1,6 @@
 import Foundation
 
-protocol EventBusListenerManager {
+protocol EventBusManager {
     func register(event: PlayerEvents,
                 for listener: @escaping (PlayerEvents) -> (),
                 for object: AnyHashable,
@@ -8,4 +8,4 @@ protocol EventBusListenerManager {
     func unregister(object: AnyHashable)
 }
 
-extension EventBus: EventBusListenerManager where Event == PlayerEvents {}
+extension EventBus: EventBusManager where Event == PlayerEvents {}

@@ -5,7 +5,9 @@ struct EventEntry<Event> {
     let priority: Priority
     let listener: (Event) -> ()
     
-    init(id: AnyHashable, priority: Priority, listener: @escaping (Event) -> ()) {
+    init(id: AnyHashable,
+         priority: Priority,
+         listener: @escaping (Event) -> ()) {
         self.id = id
         self.priority = priority
         self.listener = listener

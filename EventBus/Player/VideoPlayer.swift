@@ -1,10 +1,10 @@
 import AVKit
 
 class VideoPlayer: Player {
-    private let eventBusListenerManager: EventBusListenerManager
+    private let eventBusListenerManager: EventBusManager
     private let delegate: VideoPlayerDelegate
 
-    init(eventBusListenerManager: EventBusListenerManager,
+    init(eventBusListenerManager: EventBusManager,
          delegate: VideoPlayerDelegate) {
         self.eventBusListenerManager = eventBusListenerManager
         self.delegate = delegate
