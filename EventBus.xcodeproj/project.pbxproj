@@ -15,6 +15,13 @@
 		EFD56E7825B6DFF7009F1A61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFD56E7625B6DFF7009F1A61 /* LaunchScreen.storyboard */; };
 		EFD56E8325B6DFF8009F1A61 /* EventBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56E8225B6DFF8009F1A61 /* EventBusTests.swift */; };
 		EFD56E8E25B6DFF8009F1A61 /* EventBusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56E8D25B6DFF8009F1A61 /* EventBusUITests.swift */; };
+		EFD56EB125B6ED9D009F1A61 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56EB025B6ED9D009F1A61 /* EventBus.swift */; };
+		EFD56EB625B6EDC9009F1A61 /* EventEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56EB525B6EDC9009F1A61 /* EventEntry.swift */; };
+		EFD56EBB25B6EE64009F1A61 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56EBA25B6EE64009F1A61 /* VideoPlayer.swift */; };
+		EFD56ECB25B6FCCF009F1A61 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56ECA25B6FCCF009F1A61 /* Player.swift */; };
+		EFD56ED325B6FCDC009F1A61 /* PlayerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56ED225B6FCDC009F1A61 /* PlayerEvents.swift */; };
+		EFD56ED925B6FD04009F1A61 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56ED825B6FD04009F1A61 /* Priority.swift */; };
+		EFD56EE825B6FD47009F1A61 /* VideoPlayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD56EE725B6FD47009F1A61 /* VideoPlayerComposer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,13 @@
 		EFD56E8925B6DFF8009F1A61 /* EventBusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventBusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFD56E8D25B6DFF8009F1A61 /* EventBusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBusUITests.swift; sourceTree = "<group>"; };
 		EFD56E8F25B6DFF8009F1A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFD56EB025B6ED9D009F1A61 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
+		EFD56EB525B6EDC9009F1A61 /* EventEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEntry.swift; sourceTree = "<group>"; };
+		EFD56EBA25B6EE64009F1A61 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		EFD56ECA25B6FCCF009F1A61 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		EFD56ED225B6FCDC009F1A61 /* PlayerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvents.swift; sourceTree = "<group>"; };
+		EFD56ED825B6FD04009F1A61 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		EFD56EE725B6FD47009F1A61 /* VideoPlayerComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerComposer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +113,9 @@
 		EFD56E6A25B6DFF6009F1A61 /* EventBus */ = {
 			isa = PBXGroup;
 			children = (
+				EFD56EE325B6FD2C009F1A61 /* Player */,
+				EFD56ED725B6FCF3009F1A61 /* EventBus */,
+				EFD56EC925B6FCC1009F1A61 /* Domain */,
 				EFD56E6B25B6DFF6009F1A61 /* AppDelegate.swift */,
 				EFD56E6D25B6DFF6009F1A61 /* SceneDelegate.swift */,
 				EFD56E6F25B6DFF6009F1A61 /* ViewController.swift */,
@@ -106,6 +123,7 @@
 				EFD56E7425B6DFF7009F1A61 /* Assets.xcassets */,
 				EFD56E7625B6DFF7009F1A61 /* LaunchScreen.storyboard */,
 				EFD56E7925B6DFF7009F1A61 /* Info.plist */,
+				EFD56EE725B6FD47009F1A61 /* VideoPlayerComposer.swift */,
 			);
 			path = EventBus;
 			sourceTree = "<group>";
@@ -126,6 +144,33 @@
 				EFD56E8F25B6DFF8009F1A61 /* Info.plist */,
 			);
 			path = EventBusUITests;
+			sourceTree = "<group>";
+		};
+		EFD56EC925B6FCC1009F1A61 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				EFD56ECA25B6FCCF009F1A61 /* Player.swift */,
+				EFD56ED225B6FCDC009F1A61 /* PlayerEvents.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		EFD56ED725B6FCF3009F1A61 /* EventBus */ = {
+			isa = PBXGroup;
+			children = (
+				EFD56EB525B6EDC9009F1A61 /* EventEntry.swift */,
+				EFD56EB025B6ED9D009F1A61 /* EventBus.swift */,
+				EFD56ED825B6FD04009F1A61 /* Priority.swift */,
+			);
+			path = EventBus;
+			sourceTree = "<group>";
+		};
+		EFD56EE325B6FD2C009F1A61 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				EFD56EBA25B6EE64009F1A61 /* VideoPlayer.swift */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +304,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFD56E7025B6DFF6009F1A61 /* ViewController.swift in Sources */,
+				EFD56EB125B6ED9D009F1A61 /* EventBus.swift in Sources */,
+				EFD56EE825B6FD47009F1A61 /* VideoPlayerComposer.swift in Sources */,
 				EFD56E6C25B6DFF6009F1A61 /* AppDelegate.swift in Sources */,
 				EFD56E6E25B6DFF6009F1A61 /* SceneDelegate.swift in Sources */,
+				EFD56ECB25B6FCCF009F1A61 /* Player.swift in Sources */,
+				EFD56EBB25B6EE64009F1A61 /* VideoPlayer.swift in Sources */,
+				EFD56EB625B6EDC9009F1A61 /* EventEntry.swift in Sources */,
+				EFD56ED325B6FCDC009F1A61 /* PlayerEvents.swift in Sources */,
+				EFD56ED925B6FD04009F1A61 /* Priority.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
